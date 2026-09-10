@@ -5,8 +5,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.axpr0n.databinding.ActivityBrowserBinding
 
