@@ -1,0 +1,17 @@
+.gradle
+build/
+*.iml
+.idea/
+.DS_Store
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+.classpath
+.project
+.settings/
+local.properties
+*.log
+.cxx/
