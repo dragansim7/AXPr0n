@@ -1,181 +1,264 @@
-# AXPr0n – Android TV Link Launcher
+# AXPr0n - Android TV Shortcut Launcher
 
-A production-ready Android TV / Google TV application that displays a clean grid of website shortcut tiles. Select a tile with your remote to open the website in an embedded in-app WebView browser.
+A lightweight Android TV application that provides quick access to web shortcuts through an intuitive grid-based interface. Perfect for creating a personalized home screen with your favorite websites and applications.
 
 ## Features
 
-- **Android TV optimized**: Full D-pad remote compatibility with predictable focus navigation
-- **Minimalist design**: Dark charcoal background (#111315) with muted green accents (#79B98A)
-- **2-column grid**: Shortcut tiles for 7 popular websites, displayed on a single home screen
-- **Embedded WebView**: All website navigation happens within the app—no external browser
-- **Smart back behavior**: Navigate back within the WebView, then to home, then exit the app
-- **Loading feedback**: Minimal loading indicator during page load
-- **TV-friendly typography**: Large, readable text and generous spacing for 10-foot viewing distance
-- **Graceful error handling**: Retry and return-to-home options for failed pages
+- **Grid-based Shortcut Interface**: 2x2 grid layout for easy navigation
+- **Favicon Integration**: Automatically loads favicons from shortcut URLs
+- **Built-in Web Browser**: Integrated WebView with navigation controls
+- **D-Pad Navigation**: Full support for Android TV remote controls
+- **Focus Management**: Intelligent focus handling with visual feedback
+- **Error Handling**: User-friendly error pages for failed page loads
+- **Material Design**: Clean, modern UI with proper theming
+- **View Binding**: Type-safe view access with Android's ViewBinding
 
-## Supported Websites (in order)
+## Architecture
 
-1. xHamster
-2. SpankBang
-3. PornDoe
-4. PornDig
-5. HQPorner
-6. ePorner
-7. PornTrex
+### Project Structure
 
-## Build Instructions
+```
+AXPr0n/
+├── app/
+│   ├── src/main/
+│   │   ├── kotlin/com/axpr0n/
+│   │   │   ├── MainActivity.kt           # Home screen with shortcut grid
+│   │   │   ├── BrowserActivity.kt        # Web browser with controls
+│   │   │   ├── Shortcut.kt               # Data class for shortcuts
+│   │   │   ├── ShortcutManager.kt        # Manages shortcut data
+│   │   │   └── FaviconFetcher.kt         # Fetches favicons from URLs
+│   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   │   ├── activity_main.xml     # Main activity layout
+│   │   │   │   ├── activity_browser.xml  # Browser activity layout
+│   │   │   │   └── item_shortcut.xml     # Shortcut tile layout
+│   │   │   ├── values/
+│   │   │   │   ├── strings.xml           # String resources
+│   │   │   │   ├── dimens.xml            # Dimension resources
+│   │   │   │   └── colors.xml            # Color resources
+│   │   │   └── drawable/
+│   │   │       ├── tile_background.xml   # Tile background shape
+│   │   │       ├── progress_bar.xml      # Loading indicator
+│   │   │       └── ic_fallback.xml       # Fallback icon
+│   │   └── AndroidManifest.xml
+│   ├── build.gradle.kts                  # Module-level build config
+│   └── proguard-rules.pro                # ProGuard rules
+├── build.gradle.kts                      # Project-level build config
+├── settings.gradle.kts                   # Gradle settings
+├── .github/workflows/
+│   └── build.yml                         # CI/CD workflow
+├── .gitignore                            # Git ignore rules
+└── LICENSE                               # MIT License
+
+```
+
+### Key Components
+
+#### MainActivity
+- Displays grid of shortcut tiles
+- Handles navigation between shortcuts
+- Uses RecyclerView with GridLayoutManager (2 columns)
+- Manages focus state and restoration
+
+#### BrowserActivity
+- Embeds Android WebView for browsing
+- Provides back/reload/home controls
+- Shows loading indicator during page loads
+- Displays error pages for failed requests
+
+#### ShortcutAdapter
+- Custom RecyclerView adapter for shortcuts
+- Loads favicons asynchronously
+- Updates focus state with visual scaling
+- Handles click events
+
+## Setup Instructions
 
 ### Prerequisites
 
-- Android Studio 2024.1 or later
-- Android SDK API 28–34
-- Gradle 8.x
+- **Android Studio** (Arctic Fox or later)
+- **JDK 11** or higher
+- **Android SDK 28** or higher
+- **Gradle 7.0** or higher
 
-### Steps
+### Build from Source
 
-1. **Clone the repository**:
+1. **Clone the repository**
    ```bash
    git clone https://github.com/dragansim7/AXPr0n.git
    cd AXPr0n
    ```
 
-2. **Open in Android Studio**:
-   - Launch Android Studio
-   - Select "Open" and choose the `AXPr0n` directory
-   - Wait for Gradle sync to complete
+2. **Open in Android Studio**
+   - File → Open → Select the AXPr0n directory
+   - Android Studio will sync Gradle automatically
 
-3. **Build the APK**:
-   ```bash
-   ./gradlew assembleRelease
+3. **Configure Shortcuts** (Optional)
+   Edit `ShortcutManager.kt` to customize shortcuts:
+   ```kotlin
+   object ShortcutManager {
+       val shortcuts = listOf(
+           Shortcut("YouTube", "https://youtube.com", R.drawable.ic_youtube),
+           Shortcut("Netflix", "https://netflix.com", R.drawable.ic_netflix),
+           // Add more shortcuts...
+       )
+   }
    ```
-   or use Android Studio's **Build** > **Build Bundle(s) / APK(s)** > **Build APK(s)**
 
-4. **Install on Android TV**:
+4. **Build the APK**
+   - Debug: `./gradlew assembleDebug`
+   - Release: `./gradlew assembleRelease`
+
+5. **Install on Device**
    ```bash
-   adb install -r app/build/outputs/apk/release/app-release.apk
+   # For debug APK
+   ./gradlew installDebug
+   
+   # For release APK (requires signed keystore)
+   ./gradlew installRelease
    ```
 
-5. **Run on Emulator**:
-   - Create an Android TV emulator (e.g., "Android TV (1080p)")
-   - Select it as the target device
-   - Press **Run** in Android Studio
+## Building APKs
 
-## Project Structure
-
+### Debug Build
+```bash
+./gradlew assembleDebug
 ```
-AXPr0n/
-├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── kotlin/com/axpr0n/
-│   │   │   │   ├── MainActivity.kt          # Home grid screen
-│   │   │   │   ├── BrowserActivity.kt       # WebView browser screen
-│   │   │   │   ├── ShortcutManager.kt       # Shortcut data model
-│   │   │   │   └── FaviconFetcher.kt        # Icon/favicon loading utility
-│   │   │   ├── res/
-│   │   │   │   ├── layout/
-│   │   │   │   │   ├── activity_main.xml
-│   │   │   │   │   └── activity_browser.xml
-│   │   │   │   ├── drawable/
-│   │   │   │   │   └── ic_fallback.xml      # Fallback tile icon
-│   │   │   │   ├── values/
-│   │   │   │   │   ├── colors.xml
-│   │   │   │   │   ├── dimens.xml
-│   │   │   │   │   └── strings.xml
-│   │   │   │   └── AndroidManifest.xml
-│   │   └── test/
-│   ├── build.gradle.kts
-│   └── proguard-rules.pro
-├── build.gradle.kts
-├── gradle.properties
-├── settings.gradle.kts
-├── README.md
-└── LICENSE
+Output: `app/build/outputs/apk/debug/app-debug.apk`
+
+### Release Build
+```bash
+./gradlew assembleRelease
 ```
+Requires signing configuration. See [Android Signing Guide](https://developer.android.com/studio/publish/app-signing)
 
-## Key Files
+Output: `app/build/outputs/apk/release/app-release.apk`
 
-- **MainActivity.kt**: Home screen with 2-column grid of tiles and focus navigation
-- **BrowserActivity.kt**: Full-screen WebView with top control bar (back, title, reload)
-- **ShortcutManager.kt**: Data model defining all websites, labels, and URLs
-- **FaviconFetcher.kt**: Async icon downloading with fallback support
-- **AndroidManifest.xml**: TV launcher configuration, permissions, and intent filters
+## Automated Builds (GitHub Actions)
+
+This project includes a GitHub Actions workflow that automatically:
+- Builds the APK on every push to `main`
+- Runs on pull requests
+- Uploads artifacts for 30 days
+- Creates releases when tags are pushed
+
+Workflow file: `.github/workflows/build.yml`
+
+### Manual Workflow Trigger
+1. Go to Actions tab
+2. Select "Build Android APK"
+3. Click "Run workflow"
+
+## Dependencies
+
+### Core Libraries
+- **androidx.appcompat:appcompat** - AppCompat support
+- **androidx.recyclerview:recyclerview** - RecyclerView for grid layout
+- **androidx.constraintlayout:constraintlayout** - ConstraintLayout
+- **androidx.lifecycle:lifecycle-runtime-ktx** - Lifecycle management
+- **org.jetbrains.kotlinx:kotlinx-coroutines** - Coroutines for async tasks
+
+### View Binding
+- **androidx.viewbinding:viewbinding** - Type-safe view access
+
+All dependencies are defined in `app/build.gradle.kts`
 
 ## Configuration
 
-### Editing Shortcuts
-
-Open `ShortcutManager.kt` and modify the `shortcuts` list:
-
-```kotlin
-val shortcuts = listOf(
-    Shortcut("xHamster", "https://xhamster.com/", "https://..."),
-    Shortcut("SpankBang", "https://spankbang.com/", "https://..."),
-    // ...
-)
+### Dimensions & Spacing
+Edit `app/src/main/res/values/dimens.xml`:
+```xml
+<dimen name="tile_size">160dp</dimen>
+<dimen name="icon_size">80dp</dimen>
+<dimen name="grid_spacing">16dp</dimen>
 ```
 
-### Customizing Colors
-
-Edit `res/values/colors.xml`:
-
+### Colors & Theming
+Edit `app/src/main/res/values/colors.xml`:
 ```xml
 <color name="background_charcoal">#111315</color>
-<color name="tile_surface">#1B1F21</color>
+<color name="tile_surface">#1A1C1E</color>
 <color name="accent_green">#79B98A</color>
 <color name="text_primary">#F2F4F3</color>
-<color name="text_secondary">#A8B0AD</color>
 ```
 
-### Adjusting Dimensions
+## Testing
 
-Edit `res/values/dimens.xml` for tile size, spacing, margins, and corner radius.
+### Running Tests
+```bash
+./gradlew test           # Unit tests
+./gradlew connectedAndroidTest  # Instrumented tests
+```
 
-## TV Remote Controls
+### Testing on Android TV Emulator
+1. Create Android Virtual Device (API 28+)
+2. Select "TV" as device type
+3. Run: `./gradlew installDebug`
+4. Navigate using D-Pad
 
-| Button | Action |
-|--------|--------|
-| **D-Pad Up/Down** | Move focus between rows |
-| **D-Pad Left/Right** | Move focus between columns |
-| **Centre/Select** | Open focused tile in browser |
-| **Back** | Exit browser (if history exists) or return to home / exit app |
+## Troubleshooting
 
-## Technical Details
+### Build Fails
+- Ensure JDK 11+ is installed
+- Run: `./gradlew clean build`
+- Check Android SDK is properly installed
 
-- **Language**: Kotlin
-- **Min SDK**: API 28 (Android 9)
-- **Target SDK**: API 34 (Android 15)
-- **Architecture**: MVVM-lite with Coroutines
-- **UI Framework**: Android Views + RecyclerView (GridLayoutManager)
-- **WebView**: Android System WebView with JavaScript and DOM storage enabled
-- **Manifest Features**:
-  - `android.software.leanback` (Android TV support)
-  - `android.hardware.touchscreen` not required
-  - Intent category: `android.intent.category.LEANBACK_LAUNCHER`
+### APK Won't Install
+- Ensure target device is Android 9.0 (API 28) or higher
+- Check device has developer mode and USB debugging enabled
+- Use: `adb install app/build/outputs/apk/release/app-release.apk`
 
-## Permissions
+### WebView Issues
+- Ensure device has updated Google Chrome or Android System WebView
+- Check internet connection on device
+- Verify URLs are accessible
 
-- `android.permission.INTERNET` — Required to load websites
-- No analytics, ads, tracking, or account permissions
+### Favicon Not Loading
+- Check internet connectivity
+- Verify URL is valid and accessible
+- Favicon loading happens asynchronously - wait for it to complete
 
-## Gradle Dependencies
+## Performance Optimization
 
-- `androidx.appcompat:appcompat`
-- `androidx.constraintlayout:constraintlayout`
-- `androidx.recyclerview:recyclerview`
-- `androidx.lifecycle:lifecycle-runtime-ktx`
-- `androidx.lifecycle:lifecycle-viewmodel-ktx`
-- `androidx.lifecycle:lifecycle-livedata-ktx`
-- `kotlinx.coroutines:coroutines-android`
-- `com.squareup.okhttp3:okhttp` (for favicon fetching)
-- `org.jsoup:jsoup` (for HTML parsing, optional)
-- Coil (for image loading) or manual implementation
+- **Favicon Caching**: Favicons are cached after first load
+- **Focus Restoration**: Last focused position is restored on resume
+- **Lazy Loading**: Images loaded on-demand in RecyclerView
+- **Coroutine Management**: Proper lifecycle-aware coroutine scope usage
+
+## Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
 ## License
 
-All rights reserved. See LICENSE for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+**dragansim7** - Initial development
+
+## Support
+
+For issues, questions, or suggestions:
+- Open an issue on [GitHub Issues](https://github.com/dragansim7/AXPr0n/issues)
+- Check existing documentation and README
+- Review code comments for implementation details
+
+## Changelog
+
+### Version 1.0.0 (2026-09-10)
+- Initial release
+- Grid-based shortcut interface
+- Integrated WebView browser
+- Favicon loading
+- D-Pad navigation support
+- GitHub Actions CI/CD workflow
+- Full documentation
 
 ---
 
-**Version**: 1.0  
-**Last Updated**: 2026-09-10
+**Happy browsing on your Android TV! 📺**
