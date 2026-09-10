@@ -1,0 +1,8 @@
+-keep class com.axpr0n.** { *; }
+-keep class androidx.** { *; }
+-keep class kotlin.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Grid & Spacing -->
+    <dimen name="screen_margin_horizontal">48dp</dimen>
+    <dimen name="screen_margin_vertical">32dp</dimen>
+    <dimen name="grid_spacing">32dp</dimen>
+    <dimen name="column_spacing">24dp</dimen>
+    
+    <!-- Tiles -->
+    <dimen name="tile_size">200dp</dimen>
+    <dimen name="tile_corner_radius">20dp</dimen>
+    <dimen name="tile_elevation">4dp</dimen>
+    <dimen name="tile_focused_elevation">8dp</dimen>
+    <dimen name="tile_focus_scale">1.06</dimen>
+    
+    <!-- Icons & Images -->
+    <dimen name="icon_size">80dp</dimen>
+    <dimen name="icon_margin_bottom">12dp</dimen>
+    
+    <!-- Text -->
+    <dimen name="title_text_size">32sp</dimen>
+    <dimen name="tile_label_text_size">16sp</dimen>
+    <dimen name="control_text_size">14sp</dimen>
+    
+    <!-- Controls -->
+    <dimen name="control_bar_height">56dp</dimen>
+    <dimen name="control_button_min_width">60dp</dimen>
+    <dimen name="control_button_padding">12dp</dimen>
+    
+    <!-- Animation -->
+    <dimen name="focus_animation_duration">150</dimen>
+    <dimen name="focus_border_width">3dp</dimen>
+</resources>

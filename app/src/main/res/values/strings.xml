@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AXPr0n</string>
+    <string name="home_title">QuickLinks</string>
+    <string name="control_back">Back</string>
+    <string name="control_reload">Reload</string>
+    <string name="control_home">Home</string>
+    <string name="loading">Loading...</string>
+    <string name="error_loading">Failed to load page</string>
+    <string name="error_retry">Retry</string>
+    <string name="error_home">Return Home</string>
+    <string name="browser_title_default">Browser</string>
+</resources>

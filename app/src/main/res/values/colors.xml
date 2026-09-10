@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Background -->
+    <color name="background_charcoal">#111315</color>
+    <color name="tile_surface">#1B1F21</color>
+    
+    <!-- Accent & Focus -->
+    <color name="accent_green">#79B98A</color>
+    <color name="accent_green_dark">#6A9979</color>
+    
+    <!-- Text -->
+    <color name="text_primary">#F2F4F3</color>
+    <color name="text_secondary">#A8B0AD</color>
+    
+    <!-- UI Elements -->
+    <color name="control_bg">#242829</color>
+    <color name="divider">#2C3234</color>
+    
+    <!-- Status & Feedback -->
+    <color name="loading_progress">#79B98A</color>
+    <color name="error_text">#FF6B6B</color>
+</resources>
